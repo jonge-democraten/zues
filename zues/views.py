@@ -249,10 +249,12 @@ def view_home(request):
                 inhoud.append('De Jonge Democraten.')
                 inhoud = '\n'.join(inhoud)
 
-                msg = EmailMessage(subject, inhoud, from_email=from_email, to=[to])
-                msg.send()
-
-            return HttpResponseRedirect('/loginverzonden/')
+                #msg = EmailMessage(subject, inhoud, from_email=from_email, to=[to])
+                #msg.send()
+                context = { 'emailtext': inhoud }
+                return render_to_response("zues/logindebug.html", context)
+            else:
+                return HttpResponseRedirect('/loginverzonden/')
     else:
         if getattr(settings, 'RECAPTCHA_PUBLIC_KEY', '') == '':
             form = forms.LidnummerForm()
